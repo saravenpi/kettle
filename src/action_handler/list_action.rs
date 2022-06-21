@@ -1,0 +1,21 @@
+use std::fs::{self, read_dir};
+use std::path::Path;
+
+pub fn handle_action(kettle_path: &str) {
+    if Path::new(kettle_path).exists() {
+        let mut kettles_count = read_dir(kettle_path)
+            .unwrap().count();
+
+        for file in fs::read_dir(kettle_path).unwrap() {
+
+            let unwraped_file = file.unwrap().path();
+
+            if Path::new(&unwraped_file.as_path()).is_dir() {
+                println!("{}", unwraped_file.display());
+            } else {
+                kettles_count -= 1;
+            }
+        }
+        println!("You have {} kettle(s)", kettles_count);
+    }
+}
