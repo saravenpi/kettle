@@ -14,47 +14,48 @@ fn check_default(unwraped_data: &str, message: &str) -> bool {
         return true;
     }
 }
+
 pub fn handle_action(args: &mut std::env::Args, kettle_repo_path: &str) {
 
-    let action = args.nth(1).unwrap_or_default();
-    if action == "" {
-        println!("Welcome to Kettle, use -h for all the commands");
-    } else {
-        let action_args = args.into_iter();
+    let action = &args.nth(1).unwrap_or_default()[..];
+    let action_args = args.into_iter();
+    let kettle_name = action_args.nth(0).unwrap_or_default();
 
-        if action == "save" {
-            save_action::handle_action(kettle_repo_path);
-        } else if action == "delete" {
-            let kettle_name = action_args.nth(0).unwrap_or_default();
+    match action {
+        "" => println!("Welcome to Kettle, use -h for all the commands"),
+        "save" => save_action::handle_action(kettle_repo_path),
+        "delete" => {
             if check_default(&kettle_name, "No kettle name was given") {
                 delete_action::handle_action(&kettle_name, kettle_repo_path);
             }
-        } else if action == "init" {
-            let kettle_name = action_args.nth(0).unwrap_or_default();
+        },
+        "init" => {
             if check_default(&kettle_name, "No kettle name was given") {
                 init_action::handle_action(&kettle_name, kettle_repo_path);
             }
-        } else if action == "list" {
-            list_action::handle_action(kettle_repo_path);
-        } else if action == "include" {
+        },
+        "list" => list_action::handle_action(kettle_repo_path),
+        "include" => {
             let file_name = args.nth(0).unwrap_or_default();
             if check_default(&file_name, "No file name was given") {
                 include_action::handle_action(&file_name);
             }
-        } else if action == "exclude" {
+        },
+        "exclude" => {
             let file_name = args.nth(0).unwrap_or_default();
                 if check_default(&file_name, "No file name was given") {
                     exclude_action::handle_action(&file_name);
                 }
-        } else if action == "use" {
-            let kettle_name = action_args.nth(0).unwrap_or_default();
+        },
+        "use" => {
             if check_default(&kettle_name, "No kettle name was given") {
                 let destination_folder = action_args.nth(0).unwrap_or_default();
                 if check_default(&destination_folder, "No destination folder was given") {
                     use_action::handle_action(&kettle_name, &destination_folder, kettle_repo_path);
                 }
             }
-        } else if action == "-h" || action == "--help" || action == "help" {
+        },
+        "-h" | "--help" | "-help" | "help" => {
             println!(" * Welcome to Kettle 🫖    * ");
             println!(" * the boilerplate manager *");
             println!("");
@@ -70,9 +71,7 @@ pub fn handle_action(args: &mut std::env::Args, kettle_repo_path: &str) {
             println!("");
             println!("- created with ❤️  by @saravenpi");
             println!("- https://github.com/saravenpi\n");
-
-        } else {
-            println!("This command was not found, use -h for all the commands")
         }
-    }
+        _ => println!("This command was not found, use -h for all the commands"),
+    };
 }
