@@ -10,7 +10,7 @@ struct Recipe {
 }
 
 pub fn handle_action(kettle_name: &str, destination_folder: &str, kettle_path: &str) {
-    if Path::new(destination_folder).exists() {
+    if Path::new(destination_folder).is_dir() {
         println!("⚠️  a folder already exists with this name")
     } else {
         let repo_kettle_vector = vec![kettle_path, kettle_name];

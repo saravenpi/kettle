@@ -1,6 +1,8 @@
 # Kettle 🫖
 ## The boilerplate manager
 
+### How it works:
+
 ```
 Welcome to Kettle 🫖
 the boilerplate manager
@@ -14,4 +16,21 @@ COMMANDS:
   delete <kettle_name>                   : Deletes a kettle from the kettle repo
   use <kettle_name> <destination_folder> : Import a kettle to the destination_folder
   list                                   : Lists all the kettles in the kettle repo
+```
+
+### Installation:
+
+Your can run:
+```
+./install.sh
+```
+That will run itself:
+```
+cargo build --release
+sudo cp target/release/kettle /usr/bin
+```
+
+If the install file doesn't execute, run this before:
+```
+chmod +x install.sh
 ```
