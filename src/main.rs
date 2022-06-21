@@ -9,7 +9,7 @@ fn main() {
     match dirs::home_dir() {
         Some(path) => {
             let home_dir: &str = &path.display().to_string();
-            let kettle_path = vec![home_dir, "/.kettle/"].concat();
+            let kettle_path = vec![home_dir, "/.config/kettle/"].concat();
             handle_action(&mut args, &kettle_path);
         }
         None => println!("Impossible to get your home dir!"),
