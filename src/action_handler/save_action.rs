@@ -23,6 +23,21 @@ pub fn handle_action(kettle_repo_path: &str) {
             let kettle_repo_file =
                 vec![kettle_path.to_string(), "/".to_string(), file_name.clone()].concat();
 
+            let split_structure = kettle_repo_file.split("/");
+
+            let length_to_remove = split_structure.last().unwrap_or_default().len();
+            let mut folder_path = kettle_repo_file.clone();
+
+            let mut i = 0;
+            while i < length_to_remove {
+                folder_path.pop();
+                i += 1;
+            }
+
+            if !Path::new(&folder_path).exists() {
+                fs::create_dir_all(&folder_path).expect("Error creating directory structure");
+            }
+
             fs::copy(file_name, kettle_repo_file)
                 .expect("Error encountered copying files from repo to the destination folder");
         }

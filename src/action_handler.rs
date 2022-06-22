@@ -18,40 +18,42 @@ fn check_default(unwraped_data: &str, message: &str) -> bool {
 pub fn handle_action(args: &mut std::env::Args, kettle_repo_path: &str) {
     let action = &args.nth(1).unwrap_or_default()[..];
     let action_args = args.into_iter();
-
+    let kettle_name_warning = "⚠️  No kettle name was given";
+    let file_name_warning = "⚠️  No file name was given";
     match action {
         "" => println!("Welcome to Kettle, use -h for all the commands"),
         "save" => save_action::handle_action(kettle_repo_path),
         "delete" => {
             let kettle_name = action_args.nth(0).unwrap_or_default();
-            if check_default(&kettle_name, "No kettle name was given") {
+            if check_default(&kettle_name, kettle_name_warning) {
                 delete_action::handle_action(&kettle_name, kettle_repo_path);
             }
         }
         "init" => {
             let kettle_name = action_args.nth(0).unwrap_or_default();
-            if check_default(&kettle_name, "No kettle name was given") {
+            if check_default(&kettle_name, kettle_name_warning) {
                 init_action::handle_action(&kettle_name, kettle_repo_path);
             }
         }
         "list" => list_action::handle_action(kettle_repo_path),
         "include" => {
-            let file_name = args.nth(0).unwrap_or_default();
-            if check_default(&file_name, "No file name was given") {
-                include_action::handle_action(&file_name);
+            let first_file_name = args.nth(0).unwrap_or_default();
+            if check_default(&first_file_name, file_name_warning) {
+                let other_files = args;
+                include_action::handle_action(&first_file_name, other_files);
             }
         }
         "exclude" => {
             let file_name = args.nth(0).unwrap_or_default();
-            if check_default(&file_name, "No file name was given") {
+            if check_default(&file_name, file_name_warning) {
                 exclude_action::handle_action(&file_name);
             }
         }
         "use" => {
             let kettle_name = action_args.nth(0).unwrap_or_default();
-            if check_default(&kettle_name, "No kettle name was given") {
+            if check_default(&kettle_name, kettle_name_warning) {
                 let destination_folder = action_args.nth(0).unwrap_or_default();
-                if check_default(&destination_folder, "No destination folder was given") {
+                if check_default(&destination_folder, "⚠️  No destination folder was given") {
                     use_action::handle_action(&kettle_name, &destination_folder, kettle_repo_path);
                 }
             }
