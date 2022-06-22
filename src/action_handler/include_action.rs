@@ -1,7 +1,7 @@
-use std::{fs, io::Write};
+use serde::{Deserialize, Serialize};
 use std::fs::File;
 use std::path::Path;
-use serde::{Deserialize, Serialize};
+use std::{fs, io::Write};
 
 #[derive(Serialize, Deserialize)]
 struct Recipe {
@@ -12,7 +12,6 @@ struct Recipe {
 
 pub fn handle_action(file_name: &str) {
     if Path::new(file_name).exists() {
-
         let kettle_recipe = fs::read_to_string("recipe.json")
             .expect("Error encountered while reading the recipe file");
 
@@ -23,13 +22,12 @@ pub fn handle_action(file_name: &str) {
 
         recipe_json.imported_files.push(included_file_name);
 
-        let mut recipe_file = File::create("recipe.json")
-            .expect("Error while writing to file");
+        let mut recipe_file = File::create("recipe.json").expect("Error while writing to file");
 
-        let new_recipe_json = serde_json::to_string_pretty(&recipe_json)
-            .unwrap();
+        let new_recipe_json = serde_json::to_string_pretty(&recipe_json).unwrap();
 
-        recipe_file.write_all(new_recipe_json.as_bytes())
+        recipe_file
+            .write_all(new_recipe_json.as_bytes())
             .expect("Error while writing to file");
 
         println!("✅ {file_name} successfully included !");

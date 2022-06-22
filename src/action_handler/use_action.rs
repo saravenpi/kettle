@@ -1,6 +1,6 @@
+use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::Path;
-use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
 struct Recipe {
@@ -29,22 +29,19 @@ pub fn handle_action(kettle_name: &str, destination_folder: &str, kettle_path: &
 
             for file_name in recipe_json.imported_files {
                 let repo_file_path = vec![
-                    repo_kettle_path.to_owned(), 
-                    "/".to_string(), 
-                    file_name.to_owned()
-                ].concat();
+                    repo_kettle_path.to_owned(),
+                    "/".to_string(),
+                    file_name.to_owned(),
+                ]
+                .concat();
 
-                let new_local_file_path = vec![
-                    new_local_folder_vector.concat(), 
-                    "/".to_string(), 
-                    file_name
-                ].concat();
+                let new_local_file_path =
+                    vec![new_local_folder_vector.concat(), "/".to_string(), file_name].concat();
 
                 fs::copy(repo_file_path, new_local_file_path)
                     .expect("Error encountered copying files from repo to the destination folder");
             }
             println!("✅ created successfully at 📁{destination_folder}/");
-            
         } else {
             println!("⚠️  this kettle doesn't exist");
         }
