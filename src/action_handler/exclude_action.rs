@@ -12,7 +12,7 @@ struct Recipe {
 
 pub fn handle_action(file_name: &str) {
     if Path::new(file_name).exists() {
-        let kettle_recipe = fs::read_to_string("recipe.json")
+        let kettle_recipe = fs::read_to_string("kettle.json")
             .expect("Error encountered while reading the recipe file");
 
         let mut recipe_json: Recipe = serde_json::from_str(&kettle_recipe)
@@ -28,14 +28,14 @@ pub fn handle_action(file_name: &str) {
 
             recipe_json.imported_files.remove(file_index);
 
-            let mut recipe_file = File::create("recipe.json").expect("Error while writing to file");
+            let mut recipe_file = File::create("kettle.json").expect("Error while writing to file");
             let new_recipe_json = serde_json::to_string_pretty(&recipe_json).unwrap();
 
             recipe_file
                 .write_all(new_recipe_json.as_bytes())
                 .expect("Error while writing to file");
         } else {
-            println!("The file was already not in the recipe.json")
+            println!("The file was already not in the kettle.json")
         }
         println!("✅ {file_name} successfully excluded !");
     } else {

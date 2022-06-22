@@ -20,7 +20,7 @@ pub fn handle_action(kettle_name: &str, destination_folder: &str, kettle_path: &
             let new_local_folder_path = new_local_folder_vector.concat();
             fs::create_dir(new_local_folder_path)
                 .expect("Error encountered while creating destination folder");
-            let kettle_repo_recipe_vector = vec![kettle_path, kettle_name, "/recipe.json"];
+            let kettle_repo_recipe_vector = vec![kettle_path, kettle_name, "/kettle.json"];
             let kettle_recipe = fs::read_to_string(kettle_repo_recipe_vector.concat())
                 .expect("Error encountered while reading the recipe file");
 

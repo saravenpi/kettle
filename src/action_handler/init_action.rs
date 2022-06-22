@@ -19,7 +19,7 @@ pub fn handle_action(kettle_name: &str, kettle_path: &str) {
     if !Path::new(&new_kettle_path).exists() {
         fs::create_dir(new_kettle_path).expect("Error encountered while creating kettle");
 
-        let repo_new_file_path_vector = vec![kettle_path, kettle_name, "/recipe.json"];
+        let repo_new_file_path_vector = vec![kettle_path, kettle_name, "/kettle.json"];
 
         let repo_new_file_path = repo_new_file_path_vector.concat();
 
@@ -27,11 +27,11 @@ pub fn handle_action(kettle_name: &str, kettle_path: &str) {
             File::create(repo_new_file_path).expect("Error encountered while creating file!");
 
         let mut local_file =
-            File::create("./recipe.json").expect("Error encountered while creating file!");
+            File::create("./kettle.json").expect("Error encountered while creating file!");
 
         let new_recipe = Recipe {
             name: kettle_name.to_owned(),
-            imported_files: vec!["recipe.json".to_string()],
+            imported_files: vec!["kettle.json".to_string()],
             kettle_path: repo_new_file_path_vector.concat(),
         };
 

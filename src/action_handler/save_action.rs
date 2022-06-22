@@ -10,8 +10,8 @@ struct Recipe {
 }
 
 pub fn handle_action(kettle_repo_path: &str) {
-    if Path::new("recipe.json").exists() {
-        let kettle_recipe = fs::read_to_string("recipe.json")
+    if Path::new("kettle.json").exists() {
+        let kettle_recipe = fs::read_to_string("kettle.json")
             .expect("Error encountered while reading the recipe file");
 
         let recipe_json: Recipe = serde_json::from_str(&kettle_recipe)
