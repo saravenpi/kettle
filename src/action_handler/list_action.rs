@@ -3,11 +3,9 @@ use std::path::Path;
 
 pub fn handle_action(kettle_path: &str) {
     if Path::new(kettle_path).exists() {
-        let mut kettles_count = read_dir(kettle_path)
-            .unwrap().count();
+        let mut kettles_count = read_dir(kettle_path).unwrap().count();
 
         for file in fs::read_dir(kettle_path).unwrap() {
-
             let unwraped_file = file.unwrap().path();
 
             if Path::new(&unwraped_file.as_path()).is_dir() {
