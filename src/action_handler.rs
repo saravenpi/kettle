@@ -19,17 +19,18 @@ pub fn handle_action(args: &mut std::env::Args, kettle_repo_path: &str) {
 
     let action = &args.nth(1).unwrap_or_default()[..];
     let action_args = args.into_iter();
-    let kettle_name = action_args.nth(0).unwrap_or_default();
 
     match action {
         "" => println!("Welcome to Kettle, use -h for all the commands"),
         "save" => save_action::handle_action(kettle_repo_path),
         "delete" => {
+            let kettle_name = action_args.nth(0).unwrap_or_default();
             if check_default(&kettle_name, "No kettle name was given") {
                 delete_action::handle_action(&kettle_name, kettle_repo_path);
             }
         },
         "init" => {
+            let kettle_name = action_args.nth(0).unwrap_or_default();
             if check_default(&kettle_name, "No kettle name was given") {
                 init_action::handle_action(&kettle_name, kettle_repo_path);
             }
@@ -48,6 +49,7 @@ pub fn handle_action(args: &mut std::env::Args, kettle_repo_path: &str) {
                 }
         },
         "use" => {
+            let kettle_name = action_args.nth(0).unwrap_or_default();
             if check_default(&kettle_name, "No kettle name was given") {
                 let destination_folder = action_args.nth(0).unwrap_or_default();
                 if check_default(&destination_folder, "No destination folder was given") {
