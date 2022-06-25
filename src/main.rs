@@ -1,6 +1,6 @@
 mod action_handler;
-use std::path::Path;
 use std::fs;
+use std::path::Path;
 extern crate dirs;
 
 use action_handler::handle_action;

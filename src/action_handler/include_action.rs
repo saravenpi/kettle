@@ -13,10 +13,9 @@ struct Recipe {
 
 pub fn handle_action(file_name: &str, other_files: &mut Args) {
     if Path::new(file_name).exists() {
-
         if Path::new(&file_name).is_dir() {
             println!("⚠️  Cannot import a directory");
-        } else{
+        } else {
             let kettle_recipe = fs::read_to_string("kettle.json")
                 .expect("Error encountered while reading the recipe file");
 
@@ -26,8 +25,7 @@ pub fn handle_action(file_name: &str, other_files: &mut Args) {
 
             recipe_json.imported_files.push(included_file_name);
 
-            let mut recipe_file = File::create("kettle.json")
-                .expect("Error while writing to file");
+            let mut recipe_file = File::create("kettle.json").expect("Error while writing to file");
 
             let new_recipe_json = serde_json::to_string_pretty(&recipe_json).unwrap();
 
@@ -47,11 +45,10 @@ pub fn handle_action(file_name: &str, other_files: &mut Args) {
 
                     recipe_json.imported_files.push(included_file_name);
 
-                    let mut recipe_file = File::create("kettle.json")
-                        .expect("Error while writing to file");
+                    let mut recipe_file =
+                        File::create("kettle.json").expect("Error while writing to file");
 
-                    let new_recipe_json = serde_json::to_string_pretty(&recipe_json)
-                        .unwrap();
+                    let new_recipe_json = serde_json::to_string_pretty(&recipe_json).unwrap();
 
                     recipe_file
                         .write_all(new_recipe_json.as_bytes())
@@ -62,7 +59,6 @@ pub fn handle_action(file_name: &str, other_files: &mut Args) {
                 }
             }
         }
-        
     } else {
         println!("⚠️  This file doesn't exist");
     }
