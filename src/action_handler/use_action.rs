@@ -49,7 +49,8 @@ pub fn handle_action(kettle_name: &str, destination_folder: &str, kettle_repo_pa
                     i += 1;
                 }
                 if !Path::new(&local_folder_path).exists() {
-                    fs::create_dir_all(&local_folder_path).expect("Error creating directory structure");
+                    fs::create_dir_all(&local_folder_path)
+                        .expect("Error creating directory structure");
                 }
 
                 fs::copy(repo_file_path, new_local_file_path)
