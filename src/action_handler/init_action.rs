@@ -11,15 +11,15 @@ struct Recipe {
     kettle_path: String,
 }
 
-pub fn handle_action(kettle_name: &str, kettle_path: &str) {
-    let new_kettle_vector = vec![kettle_path, kettle_name];
+pub fn handle_action(kettle_name: &str, kettle_repo_path: &str) {
+    let new_kettle_vector = vec![kettle_repo_path, kettle_name];
 
     let new_kettle_path = new_kettle_vector.concat();
 
     if !Path::new(&new_kettle_path).exists() {
         fs::create_dir(new_kettle_path).expect("Error encountered while creating kettle");
 
-        let repo_new_file_path_vector = vec![kettle_path, kettle_name, "/kettle.json"];
+        let repo_new_file_path_vector = vec![kettle_repo_path, kettle_name, "/kettle.json"];
 
         let repo_new_file_path = repo_new_file_path_vector.concat();
 

@@ -11,11 +11,11 @@ fn main() {
     match dirs::home_dir() {
         Some(path) => {
             let home_dir: &str = &path.display().to_string();
-            let kettle_path = vec![home_dir, "/.config/kettle/"].concat();
-            if !Path::new(&kettle_path).exists() {
-                fs::create_dir_all(&kettle_path).expect("Error creating directory structure");
+            let kettle_repo_path = vec![home_dir, "/.config/kettle/"].concat();
+            if !Path::new(&kettle_repo_path).exists() {
+                fs::create_dir_all(&kettle_repo_path).expect("Error creating directory structure");
             }
-            handle_action(&mut args, &kettle_path);
+            handle_action(&mut args, &kettle_repo_path);
         }
         None => println!("Impossible to get your home dir!"),
     }

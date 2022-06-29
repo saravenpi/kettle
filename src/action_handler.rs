@@ -19,7 +19,7 @@ pub fn handle_action(args: &mut std::env::Args, kettle_repo_path: &str) {
     let action = &args.nth(1).unwrap_or_default()[..];
     let action_args = args.into_iter();
     let kettle_name_warning = "⚠️  No kettle name was given";
-    let file_name_warning = "⚠️  No file name was given";
+    let file_name_warning = "⚠️  No file name was  given";
     match action {
         "" => println!("Welcome to Kettle, use -h for all the commands"),
         "save" => save_action::handle_action(kettle_repo_path),
